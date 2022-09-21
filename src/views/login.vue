@@ -4,15 +4,20 @@
       <div slot="header" class="clearfix">
         <span>黑马面经运营后台</span>
       </div>
-      <el-form label-position="top" :model="user">
-        <el-form-item label="用户名">
+      <el-form
+        ref="loginForm"
+        :rules="rules"
+        label-position="top"
+        :model="user"
+      >
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="user.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item class="login-operation">
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="submit">登录</el-button>
           <el-button>重置</el-button>
         </el-form-item>
       </el-form>
@@ -28,7 +33,27 @@ export default {
         username: "",
         password: "",
       },
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      },
     };
+  },
+  methods: {
+    submit() {
+      this.$refs.loginForm.validate((valid) => {
+        // 表单校验正确
+        if (valid) {
+          alert("submit!");
+        } else {
+          // 表单校验不正确
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
   },
 };
 </script>
@@ -40,11 +65,12 @@ export default {
   justify-content: center;
   align-items: center;
   background-image: url("../assets/login-bg.svg");
-  background-size: 100% 100%;
+  background-size: 100%;
+  background-position: center center;
 }
 
 .login-card {
-    width: 45%;
+  width: 45%;
 }
 
 ::v-deep .el-card__header {
@@ -54,6 +80,6 @@ export default {
 }
 
 .login-operation {
-    text-align: center;
+  text-align: center;
 }
 </style>
