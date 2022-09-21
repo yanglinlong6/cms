@@ -18,7 +18,7 @@
         </el-form-item>
         <el-form-item class="login-operation">
           <el-button type="primary" @click="submit">登录</el-button>
-          <el-button>重置</el-button>
+          <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -53,6 +53,9 @@ export default {
           return false;
         }
       });
+    },
+    reset() {
+      this.$refs.loginForm.resetFields();
     },
   },
 };
