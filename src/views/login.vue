@@ -14,7 +14,7 @@
           <el-input v-model="user.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="user.password"></el-input>
+          <el-input type="password" v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item class="login-operation">
           <el-button type="primary" @click="submit">登录</el-button>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { login } from "../api/user";
 export default {
   data() {
     return {
@@ -43,10 +44,17 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(async (valid) => {
         // 表单校验正确
         if (valid) {
-          alert("submit!");
+          // 调用登录接口
+          const res = await login(this.user);
+          // 解构取出token
+          const { token } = res.data.data;
+          console.log(1, token);
+          // 存储token，Vuex和本地存储
+          // 跳转首页
+          this.$router.push("/");
         } else {
           // 表单校验不正确
           console.log("error submit!!");
