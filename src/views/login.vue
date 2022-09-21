@@ -39,6 +39,8 @@ export default {
   height: 100vh;
   justify-content: center;
   align-items: center;
+  background-image: url("../assets/login-bg.svg");
+  background-size: 100% 100%;
 }
 
 .login-card {
