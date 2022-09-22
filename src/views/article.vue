@@ -7,7 +7,7 @@
     <el-card shadow="never" border="false">
       <template #header>
         <div class="header">
-          <span>共 300 条记录</span>
+          <span>共 {{ amount }} 条记录</span>
           <el-button icon="el-icon-plus" size="small" type="primary" round>
             添加面经
           </el-button>
@@ -21,6 +21,15 @@
         <el-table-column prop="views" label="浏览数"> </el-table-column>
         <el-table-column prop="createdAt" label="更新时间"> </el-table-column>
       </el-table>
+
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="amount"
+        :page-size="pageSize"
+        @current-change="onPageChange"
+      >
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -45,6 +54,16 @@ export default {
       const res = await getArticleList(this.currentPage, this.pageSize);
       this.amount = res.data.data.total;
       this.articleList = res.data.data.rows;
+      // 每次加载完数据，滚动页面到顶部
+      this.$nextTick(() => {
+        document.querySelector(".el-main").scrollTop = 0;
+      });
+    },
+    onPageChange(page) {
+      // 更新当前页
+      this.currentPage = page;
+      // 调用列表接口更新数据
+      this.loadArticleList();
     },
   },
 };
