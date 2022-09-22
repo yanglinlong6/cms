@@ -14,48 +14,39 @@
         </div>
       </template>
 
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
-        </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
+      <el-table :data="articleList" border style="width: 100%">
+        <el-table-column prop="stem" label="标题"> </el-table-column>
+        <el-table-column prop="creator" label="作者"> </el-table-column>
+        <el-table-column prop="likeCount" label="点赞"> </el-table-column>
+        <el-table-column prop="views" label="浏览数"> </el-table-column>
+        <el-table-column prop="createdAt" label="更新时间"> </el-table-column>
       </el-table>
     </el-card>
   </div>
 </template>
 
 <script>
+import { getArticleList } from "../api/article";
 export default {
   name: "article-page",
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      articleList: [],
+      currentPage: 1,
+      pageSize: 15,
+      amount: 0,
     };
   },
-  created() {},
-  methods: {},
+  created() {
+    this.loadArticleList();
+  },
+  methods: {
+    async loadArticleList() {
+      const res = await getArticleList(this.currentPage, this.pageSize);
+      this.amount = res.data.data.total;
+      this.articleList = res.data.data.rows;
+    },
+  },
 };
 </script>
 
