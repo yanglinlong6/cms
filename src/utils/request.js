@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { Message } from 'element-ui'
 import store from '../store/index';
+import router from '../router';
+
 // 配置axios根路径
 axios.defaults.baseURL = "http://interview-api-t.itheima.net/";
 
@@ -27,7 +29,15 @@ axios.interceptors.response.use(function (response) {
     // 对响应错误做点什么
     console.log(error);
     const msg = error.response.data.message;
-    if (msg) {
+    // 判断token失效
+    if (error.response.status === 401) {
+        // 提示: token失效，请重新登录
+        Message.error("token失效，请重新登录");
+        // 删除token
+        store.commit("user/delToken");
+        // 跳转登录页
+        router.push("/login");
+    } else if (msg) {
         Message.error(msg)
     }
     return Promise.reject(error);
