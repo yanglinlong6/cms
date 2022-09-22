@@ -45,7 +45,11 @@
         </el-form-item>
         <el-form-item label="内容" prop="content">
           <!-- <el-input v-model="form.content"></el-input> -->
-          <quill-editor v-model="form.content"> </quill-editor>
+          <quill-editor
+            v-model="form.content"
+            @blur="$refs.form.validateField('content')"
+          >
+          </quill-editor>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">确认</el-button>
