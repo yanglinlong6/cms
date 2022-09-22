@@ -53,6 +53,7 @@ export default {
           const { token } = res.data.data;
           console.log(1, token);
           // 存储token，Vuex和本地存储
+          this.$store.commit("user/updateToken", token);
           // 跳转首页
           this.$router.push("/");
         } else {
