@@ -44,7 +44,8 @@
           <el-input v-model="form.stem"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <el-input v-model="form.content"></el-input>
+          <!-- <el-input v-model="form.content"></el-input> -->
+          <quill-editor v-model="form.content"> </quill-editor>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">确认</el-button>

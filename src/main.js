@@ -5,6 +5,7 @@ import store from './store'
 import "./utils/element-ui";
 // 导入公共样式
 import "./styles/index.scss";
+import "./utils/rich-text";
 
 Vue.config.productionTip = false
 
