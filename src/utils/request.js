@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { Message } from 'element-ui'
 // 配置axios根路径
 axios.defaults.baseURL = "http://interview-api-t.itheima.net/";
 
@@ -20,6 +20,11 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+    console.log(error);
+    const msg = error.response.data.message;
+    if (msg) {
+        Message.error(msg)
+    }
     return Promise.reject(error);
 });
 
