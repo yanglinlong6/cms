@@ -38,8 +38,19 @@
       </el-pagination>
     </el-card>
 
-    <el-drawer title="添加面经" :visible.sync="showDrawer">
-      <span>我来啦!</span>
+    <el-drawer title="添加面经" :visible.sync="showDrawer" size="50%">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="标题">
+          <el-input v-model="form.stem"></el-input>
+        </el-form-item>
+        <el-form-item label="内容">
+          <el-input v-model="form.content"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary">确认</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+      </el-form>
     </el-drawer>
   </div>
 </template>
@@ -55,6 +66,10 @@ export default {
       pageSize: 15,
       amount: 0,
       showDrawer: false,
+      form: {
+        stem: "",
+        content: "",
+      },
     };
   },
   created() {
