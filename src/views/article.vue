@@ -8,7 +8,13 @@
       <template #header>
         <div class="header">
           <span>共 {{ amount }} 条记录</span>
-          <el-button icon="el-icon-plus" size="small" type="primary" round>
+          <el-button
+            icon="el-icon-plus"
+            size="small"
+            type="primary"
+            round
+            @click="addArticle"
+          >
             添加面经
           </el-button>
         </div>
@@ -31,6 +37,10 @@
       >
       </el-pagination>
     </el-card>
+
+    <el-drawer title="添加面经" :visible.sync="showDrawer">
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 
@@ -44,6 +54,7 @@ export default {
       currentPage: 1,
       pageSize: 15,
       amount: 0,
+      showDrawer: false,
     };
   },
   created() {
@@ -64,6 +75,9 @@ export default {
       this.currentPage = page;
       // 调用列表接口更新数据
       this.loadArticleList();
+    },
+    addArticle() {
+      this.showDrawer = true;
     },
   },
 };
