@@ -38,7 +38,12 @@
       </el-pagination>
     </el-card>
 
-    <el-drawer title="添加面经" :visible.sync="showDrawer" size="50%">
+    <el-drawer
+      title="添加面经"
+      :visible.sync="showDrawer"
+      size="50%"
+      @close="onDrawerClose"
+    >
       <el-form ref="form" :rules="rules" :model="form" label-width="80px">
         <el-form-item label="标题" prop="stem">
           <el-input v-model="form.stem"></el-input>
@@ -53,7 +58,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">确认</el-button>
-          <el-button>取消</el-button>
+          <el-button @click="showDrawer = false">取消</el-button>
         </el-form-item>
       </el-form>
     </el-drawer>
@@ -114,6 +119,9 @@ export default {
           return false;
         }
       });
+    },
+    onDrawerClose() {
+      this.$refs.form.resetFields();
     },
   },
 };
