@@ -5,3 +5,8 @@ import request from '../utils/request';
 export function login(data) {
     return request.post("/auth/login", data);
 };
+
+// 获取用户信息
+export function getUser() {
+    return request.get("/auth/currentUser");
+}
