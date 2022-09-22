@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../views/login.vue';
 import NotFound from '../views/404.vue';
 import store from '../store';
+import Dashboard from '../views/dashboard.vue';
+import Article from '../views/article.vue';
 
 Vue.use(VueRouter)
 
@@ -21,8 +23,19 @@ const routes = [
   },
   {
     path: "/",
+    redirect: "/dashboard",
     // 按需加载
     component: () => import("../views/index.vue"),
+    children: [
+      {
+        path: "dashboard",
+        component: Dashboard,
+      },
+      {
+        path: "article",
+        component: Article,
+      }
+    ]
   },
   // 404页面配置为最后一项
   {
