@@ -1,11 +1,16 @@
 import axios from 'axios';
 import { Message } from 'element-ui'
+import store from '../store/index';
 // 配置axios根路径
 axios.defaults.baseURL = "http://interview-api-t.itheima.net/";
 
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
+    const token = store.state.user.token;
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
 }, function (error) {
     // 对请求错误做些什么
