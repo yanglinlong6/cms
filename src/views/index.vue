@@ -65,6 +65,8 @@ export default {
       this.name = data.data.name;
     },
     handleConfirm() {
+      // 退出登录，删除token
+      this.$store.commit("user/delToken");
       this.$router.push("/login");
     },
   },
