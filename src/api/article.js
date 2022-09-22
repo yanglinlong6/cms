@@ -9,3 +9,9 @@ export function getArticleList(current, pageSize) {
         }
     })
 }
+
+// 创建面经
+// data -> { stem, content }
+export function createArticle(data) {
+    return request.post("/admin/interview/create", data);
+}

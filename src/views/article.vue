@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { getArticleList } from "../api/article";
+import { getArticleList, createArticle } from "../api/article";
 export default {
   name: "article-page",
   data() {
@@ -104,9 +104,11 @@ export default {
       this.showDrawer = true;
     },
     submit() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          await createArticle(this.form);
+          this.loadArticleList();
+          this.showDrawer = false;
         } else {
           console.log("error submit!!");
           return false;
