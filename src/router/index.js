@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/login.vue';
 import NotFound from '../views/404.vue';
+import store from '../store';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,6 +33,24 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+// 配置导航守卫，检查登录
+router.beforeEach((to, from, next) => {
+  // 登录页不需要检查登录
+  if (to.path === "/login") {
+    next();
+    return;
+  }
+  // 检查token
+  if(store.state.user.token) {
+    // 已登录
+    next();
+    return;
+  }
+  // 不是登录页，而且没有token
+  // 跳转到登录页
+  next("/login");
 })
 
 export default router
