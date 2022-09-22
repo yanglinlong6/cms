@@ -15,3 +15,12 @@ export function getArticleList(current, pageSize) {
 export function createArticle(data) {
     return request.post("/admin/interview/create", data);
 }
+
+// 获取面经详情
+export function getArticleDetail(id) {
+    return request.get("/admin/interview/show", {
+        params: {
+            id,
+        }
+    })
+}

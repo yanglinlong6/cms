@@ -26,6 +26,15 @@
         <el-table-column prop="likeCount" label="点赞"> </el-table-column>
         <el-table-column prop="views" label="浏览数"> </el-table-column>
         <el-table-column prop="createdAt" label="更新时间"> </el-table-column>
+        <el-table-column label="操作" width="120px">
+          <template #default="{ row }">
+            <div class="actions">
+              <i class="el-icon-view"></i>
+              <i class="el-icon-edit-outline" @click="editArticle(row.id)"></i>
+              <i class="el-icon-delete"></i>
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
 
       <el-pagination
@@ -66,7 +75,11 @@
 </template>
 
 <script>
-import { getArticleList, createArticle } from "../api/article";
+import {
+  getArticleList,
+  createArticle,
+  getArticleDetail,
+} from "../api/article";
 export default {
   name: "article-page",
   data() {
@@ -122,6 +135,10 @@ export default {
     },
     onDrawerClose() {
       this.$refs.form.resetFields();
+    },
+    async editArticle(id) {
+      const res = await getArticleDetail(id);
+      console.log(11, res);
     },
   },
 };
