@@ -48,7 +48,7 @@
     </el-card>
 
     <el-drawer
-      title="添加面经"
+      :title="form.id ? '编辑面经' : '添加面经'"
       :visible.sync="showDrawer"
       size="50%"
       @close="onDrawerClose"
@@ -120,6 +120,10 @@ export default {
     },
     addArticle() {
       this.showDrawer = true;
+      this.form = {
+        stem: "",
+        content: "",
+      };
     },
     submit() {
       this.$refs.form.validate(async (valid) => {
@@ -138,7 +142,9 @@ export default {
     },
     async editArticle(id) {
       const res = await getArticleDetail(id);
-      console.log(11, res);
+      this.form = res.data.data;
+      // 打开抽屉
+      this.showDrawer = true;
     },
   },
 };
