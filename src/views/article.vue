@@ -73,8 +73,12 @@
     </el-drawer>
 
     <el-drawer title="面经预览" :visible.sync="showPreview">
-      <h1>面经标题</h1>
-      <p>面经内容</p>
+      <div class="preview-article">
+        <!-- 标题 -->
+        <h1>{{ previewArticle.stem }}</h1>
+        <!-- 内容: HTML -->
+        <p v-html="previewArticle.content"></p>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -105,6 +109,7 @@ export default {
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
       },
       showPreview: false,
+      previewArticle: {},
     };
   },
   created() {
@@ -189,6 +194,7 @@ export default {
     },
     async preview(id) {
       const res = await getArticleDetail(id);
+      this.previewArticle = res.data.data;
       this.showPreview = true;
       console.log(1, res);
     },
@@ -243,5 +249,9 @@ export default {
     padding-bottom: 30px;
     margin: 0 0 20px 0;
   }
+}
+.preview-article {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 </style>
