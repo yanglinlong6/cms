@@ -29,7 +29,7 @@
         <el-table-column label="操作" width="120px">
           <template #default="{ row }">
             <div class="actions">
-              <i class="el-icon-view"></i>
+              <i class="el-icon-view" @click="preview(row.id)"></i>
               <i class="el-icon-edit-outline" @click="editArticle(row.id)"></i>
               <i class="el-icon-delete" @click="delArticle(row.id)"></i>
             </div>
@@ -71,6 +71,11 @@
         </el-form-item>
       </el-form>
     </el-drawer>
+
+    <el-drawer title="面经预览" :visible.sync="showPreview">
+      <h1>面经标题</h1>
+      <p>面经内容</p>
+    </el-drawer>
   </div>
 </template>
 
@@ -99,6 +104,7 @@ export default {
         stem: [{ required: true, message: "请输入标题", trigger: "blur" }],
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
       },
+      showPreview: false,
     };
   },
   created() {
@@ -180,6 +186,11 @@ export default {
           });
         })
         .catch(() => {});
+    },
+    async preview(id) {
+      const res = await getArticleDetail(id);
+      this.showPreview = true;
+      console.log(1, res);
     },
   },
 };
