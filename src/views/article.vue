@@ -80,6 +80,7 @@ import {
   createArticle,
   getArticleDetail,
   updateArticle,
+  deleteArticle,
 } from "../api/article";
 export default {
   name: "article-page",
@@ -153,15 +154,17 @@ export default {
       // 打开抽屉
       this.showDrawer = true;
     },
-    delArticle() {
+    delArticle(id) {
       this.$confirm("您确认删除这篇面经吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
-        .then(() => {
+        .then(async () => {
           // 调用接口删除数据
+          await deleteArticle(id);
           // 列表刷新
+          this.loadArticleList();
           this.$message({
             type: "success",
             message: "删除成功!",

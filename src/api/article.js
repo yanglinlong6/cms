@@ -29,3 +29,12 @@ export function getArticleDetail(id) {
 export function updateArticle(data) {
     return request.put("/admin/interview/update", data);
 }
+
+// 删除面经
+export function deleteArticle(id) {
+    return request.delete("/admin/interview/remove", {
+        data: {
+            id,
+        }
+    })
+}
