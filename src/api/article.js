@@ -24,3 +24,8 @@ export function getArticleDetail(id) {
         }
     })
 }
+
+// 编辑面经
+export function updateArticle(data) {
+    return request.put("/admin/interview/update", data);
+}

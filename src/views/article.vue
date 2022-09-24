@@ -79,6 +79,7 @@ import {
   getArticleList,
   createArticle,
   getArticleDetail,
+  updateArticle,
 } from "../api/article";
 export default {
   name: "article-page",
@@ -128,7 +129,13 @@ export default {
     submit() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          await createArticle(this.form);
+          if (this.form.id) {
+            // 编辑面经
+            const { id, stem, content } = this.form;
+            await updateArticle({ id, stem, content });
+          } else {
+            await createArticle(this.form);
+          }
           this.loadArticleList();
           this.showDrawer = false;
         } else {
