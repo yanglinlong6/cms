@@ -109,6 +109,7 @@ export default {
       const res = await getArticleList(this.currentPage, this.pageSize);
       this.amount = res.data.data.total;
       this.articleList = res.data.data.rows;
+      this.pageTotal = res.data.data.pageTotal;
       // 每次加载完数据，滚动页面到顶部
       this.$nextTick(() => {
         document.querySelector(".el-main").scrollTop = 0;
@@ -163,6 +164,14 @@ export default {
         .then(async () => {
           // 调用接口删除数据
           await deleteArticle(id);
+          // 处理最后一页只有一条数据的情况
+          if (
+            this.currentPage !== 1 &&
+            this.currentPage === this.pageTotal &&
+            this.articleList.length === 1
+          ) {
+            this.currentPage--;
+          }
           // 列表刷新
           this.loadArticleList();
           this.$message({
@@ -170,8 +179,7 @@ export default {
             message: "删除成功!",
           });
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     },
   },
 };
