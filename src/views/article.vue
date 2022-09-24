@@ -31,7 +31,7 @@
             <div class="actions">
               <i class="el-icon-view"></i>
               <i class="el-icon-edit-outline" @click="editArticle(row.id)"></i>
-              <i class="el-icon-delete"></i>
+              <i class="el-icon-delete" @click="delArticle(row.id)"></i>
             </div>
           </template>
         </el-table-column>
@@ -152,6 +152,23 @@ export default {
       this.form = res.data.data;
       // 打开抽屉
       this.showDrawer = true;
+    },
+    delArticle() {
+      this.$confirm("您确认删除这篇面经吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          // 调用接口删除数据
+          // 列表刷新
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        })
+        .catch(() => {
+        });
     },
   },
 };
